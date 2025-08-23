@@ -61,6 +61,20 @@ const PopularBusinesses = () => {
     ));
   };
 
+  const getOptionColors = (index: number) => {
+    const colors = [
+      'border-green-600 text-green-600',
+      'border-blue-600 text-blue-600', 
+      'border-purple-600 text-purple-600',
+      'border-orange-600 text-orange-600',
+      'border-pink-600 text-pink-600',
+      'border-indigo-600 text-indigo-600',
+      'border-teal-600 text-teal-600',
+      'border-red-600 text-red-600'
+    ];
+    return colors[index % colors.length];
+  };
+
   if (loading) {
     return (
       <section className="py-12 bg-background">
@@ -172,7 +186,7 @@ const PopularBusinesses = () => {
                     <div className="flex flex-wrap gap-x-1 gap-y-1">
                       {business.business_options.map((option, index) => (
                         <div key={index}>
-                          <span className="text-xs px-2 py-0.5 rounded border border-primary text-primary">
+                          <span className={`text-xs px-2 py-0.5 rounded border ${getOptionColors(index)}`}>
                             {option}
                           </span>
                         </div>
