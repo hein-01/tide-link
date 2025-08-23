@@ -121,11 +121,6 @@ const PopularBusinesses = () => {
                     {business.city}, {business.state}
                   </p>
                   
-                  {business.description && (
-                    <p className="text-xs text-muted-foreground line-clamp-2">
-                      {business.description}
-                    </p>
-                  )}
                   
                   {/* Payment and Delivery Options */}
                   <div className="flex flex-wrap gap-x-1 gap-y-1">
