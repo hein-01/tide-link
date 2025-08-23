@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, Bookmark, CheckCircle, Check, X, BadgeCheck, MapPin, ChevronRight } from 'lucide-react';
+import { Star, Bookmark, CheckCircle, Check, X, BadgeCheck, MapPin, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { supabase } from '@/integrations/supabase/client';
 
 interface Business {
@@ -77,15 +82,54 @@ const PopularBusinesses = () => {
           {businesses.map((business) => (
             <Card key={business.id} className="group w-[320px] h-[455px] flex flex-col shadow-lg hover:shadow-2xl transition-all duration-300 mx-[5px] md:mx-[10px] mb-4">
               <div className="relative overflow-hidden rounded-t-lg">
-                <img
-                  src={business.product_images && business.product_images.length > 0 ? business.product_images[0] : "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=320&h=200&fit=crop"}
-                  alt={`${business.name} products`}
-                  className="w-[320px] h-[200px] object-cover transition-transform duration-300 hover:scale-105"
-                />
+                <Swiper
+                  modules={[Navigation, Pagination]}
+                  navigation={{
+                    nextEl: `.swiper-button-next-${business.id}`,
+                    prevEl: `.swiper-button-prev-${business.id}`,
+                  }}
+                  pagination={{ clickable: true }}
+                  spaceBetween={0}
+                  slidesPerView={1}
+                  className="w-[320px] h-[200px]"
+                >
+                  {business.product_images && business.product_images.length > 0 ? (
+                    business.product_images.map((image, index) => (
+                      <SwiperSlide key={index}>
+                        <img
+                          src={image}
+                          alt={`${business.name} product ${index + 1}`}
+                          className="w-full h-[200px] object-cover"
+                        />
+                      </SwiperSlide>
+                    ))
+                  ) : (
+                    <SwiperSlide>
+                      <img
+                        src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=320&h=200&fit=crop"
+                        alt={`${business.name} products`}
+                        className="w-full h-[200px] object-cover"
+                      />
+                    </SwiperSlide>
+                  )}
+                  
+                  {/* Custom Navigation Arrows */}
+                  {business.product_images && business.product_images.length > 1 && (
+                    <>
+                      <div className={`swiper-button-prev-${business.id} absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors`}>
+                        <ChevronLeft className="w-4 h-4 text-gray-700" />
+                      </div>
+                      <div className={`swiper-button-next-${business.id} absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center cursor-pointer hover:bg-white transition-colors`}>
+                        <ChevronRight className="w-4 h-4 text-gray-700" />
+                      </div>
+                    </>
+                  )}
+                </Swiper>
+                
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="absolute top-2 right-2 px-1 py-2 h-auto w-6 bg-white/80 hover:bg-white"
+                  className="absolute top-2 right-2 px-1 py-2 h-auto w-6 bg-white/80 hover:bg-white z-20"
                 >
                   <Bookmark className="w-3 h-5 text-gray-600" />
                 </Button>
