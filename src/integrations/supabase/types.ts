@@ -272,6 +272,7 @@ export type Database = {
           search_term?: string
         }
         Returns: {
+          business_options: string[]
           category: string
           city: string
           description: string

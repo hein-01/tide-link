@@ -20,6 +20,7 @@ interface Business {
   image_url: string;
   website: string;
   product_images?: string[] | null;
+  business_options?: string[] | null;
 }
 
 const PopularBusinesses = () => {
@@ -166,24 +167,18 @@ const PopularBusinesses = () => {
                   </p>
                   
                   
-                  {/* Payment and Delivery Options */}
-                  <div className="flex flex-wrap gap-x-1 gap-y-1">
-                    <div>
-                      <span className="text-xs px-2 py-0.5 rounded border border-green-600 text-green-600">Cash on Delivery</span>
+                  {/* Business Options */}
+                  {business.business_options && business.business_options.length > 0 && (
+                    <div className="flex flex-wrap gap-x-1 gap-y-1">
+                      {business.business_options.map((option, index) => (
+                        <div key={index}>
+                          <span className="text-xs px-2 py-0.5 rounded border border-primary text-primary">
+                            {option}
+                          </span>
+                        </div>
+                      ))}
                     </div>
-                    
-                    <div>
-                      <span className="text-xs px-2 py-0.5 rounded border border-blue-600 text-blue-600">Pickup In-Store</span>
-                    </div>
-                    
-                    <div>
-                      <span className="text-xs px-2 py-0.5 rounded border border-purple-600 text-purple-600">Digital Payments</span>
-                    </div>
-                    
-                    <div>
-                      <span className="text-xs px-2 py-0.5 rounded border border-orange-600 text-orange-600">Next-Day Delivery</span>
-                    </div>
-                  </div>
+                  )}
                 </div>
                 
                 <div className="space-y-2 mt-2">
