@@ -48,7 +48,7 @@ export default function UserDashboard() {
     setActiveSection(action);
     
     if (action === "add-listing") {
-      navigate("/add-business");
+      navigate("/list-business");
     } else if (action === "website-pos") {
       navigate("/list-&-get-pos-website");
     }
