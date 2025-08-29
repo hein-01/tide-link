@@ -725,7 +725,7 @@ export default function ListBusiness() {
 
               {/* Online Shop + POS Option */}
               <div className="space-y-4">
-                <Label>Get Online Shop Website + POS as well?</Label>
+                <Label>Enjoy a free 14-day Online Shop Website and POS. It's just $10 a month after that, and you can cancel anytime.</Label>
                 <RadioGroup
                   value={formData.onlineShopOption}
                   onValueChange={(value) => handleInputChange('onlineShopOption', value)}
