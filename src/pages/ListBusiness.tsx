@@ -344,6 +344,9 @@ export default function ListBusiness() {
         <div className="text-center mb-8">
           <Building2 className="h-12 w-12 mx-auto mb-4 text-primary" />
           <h1 className="text-4xl font-bold mb-4">List Your Business</h1>
+          <p className="text-lg text-primary font-semibold mb-4">
+            POS & Online Website included (14 days free)
+          </p>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Join our directory and connect with customers in your area. Fill out the form below to get started.
           </p>
