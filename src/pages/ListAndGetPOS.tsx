@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,6 +18,7 @@ import {
 } from "lucide-react";
 
 const ListAndGetPOS = () => {
+  const navigate = useNavigate();
   const features = [
     {
       icon: <Globe className="h-6 w-6" />,
@@ -122,7 +124,11 @@ const ListAndGetPOS = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground group">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-primary-foreground group"
+              onClick={() => navigate("/list-business")}
+            >
               Accept Free Trial
               <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 group-active:translate-x-1" />
             </Button>
@@ -216,6 +222,7 @@ const ListAndGetPOS = () => {
                   <Button 
                     className={`w-full ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
                     variant={plan.popular ? 'default' : 'outline'}
+                    onClick={() => navigate("/list-business")}
                   >
                     Accept Free Trial
                   </Button>
