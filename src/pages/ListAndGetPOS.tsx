@@ -122,12 +122,12 @@ const ListAndGetPOS = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-              Start Free Trial
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground group">
+              Accept Free Trial
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 group-active:translate-x-1" />
             </Button>
             <Button variant="outline" size="lg">
-              Watch Demo
+              Watch Demo (2 min)
             </Button>
           </div>
         </div>
@@ -217,7 +217,7 @@ const ListAndGetPOS = () => {
                     className={`w-full ${plan.popular ? 'bg-primary hover:bg-primary/90 text-primary-foreground' : ''}`}
                     variant={plan.popular ? 'default' : 'outline'}
                   >
-                    Start Free Trial
+                    Accept Free Trial
                   </Button>
                 </CardContent>
               </Card>
@@ -235,9 +235,9 @@ const ListAndGetPOS = () => {
           <p className="text-xl mb-8 text-primary-foreground/90 max-w-2xl mx-auto">
             Join thousands of businesses already using our platform to grow their sales
           </p>
-          <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
+          <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90 group">
             Get Started Today
-            <ArrowRight className="ml-2 h-5 w-5" />
+            <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 group-active:translate-x-1" />
           </Button>
         </div>
       </section>
