@@ -91,7 +91,7 @@ export default function ListBusiness() {
     startingPrice: "",
     options: [],
     productsCatalog: [],
-    onlineShopOption: "maybe",
+    onlineShopOption: "sure",
     paymentOption: "stripe"
   });
 
@@ -740,7 +740,7 @@ export default function ListBusiness() {
                   </div>
                 </RadioGroup>
 
-                {formData.onlineShopOption === 'sure' && (
+                {(formData.onlineShopOption === 'sure' || formData.onlineShopOption === 'maybe') && (
                   <div className="ml-6 p-3 bg-green-50 border border-green-200 rounded-lg">
                     <p className="text-sm text-green-800 font-medium">
                       The total is 10 USD. You can choose the suitable payment options below.
