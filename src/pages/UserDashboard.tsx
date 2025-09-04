@@ -51,7 +51,6 @@ const sidebarItems = [
   { title: "Add Listing", icon: Plus, action: "add-listing" },
   { title: "Get Website + POS", icon: Globe, action: "website-pos" },
   { title: "My Listings", icon: Building2, action: "listings" },
-  { title: "Subscriptions", icon: CreditCard, action: "subscription" },
   { title: "Profile Info", icon: User, action: "profile" },
   { title: "Email Settings", icon: Mail, action: "email" },
 ];
@@ -219,7 +218,7 @@ export default function UserDashboard() {
     
     if (action === "website-pos") {
       navigate("/list-&-get-pos-website");
-    } else if (action === "listings" || action === "subscription") {
+    } else if (action === "listings") {
       fetchUserBusinesses();
     } else if (action === "wishlists") {
       console.log('Wishlists section selected, fetching bookmarks');
@@ -412,95 +411,6 @@ export default function UserDashboard() {
         );
 
 
-      case "subscription":
-        const activePOSBusinesses = userBusinesses.filter(business => business["POS+Website"] === 1);
-        
-        return (
-          <div className="space-y-6 animate-fade-in">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-dashboard-gradient-start to-dashboard-gradient-end bg-clip-text text-transparent">Subscription</h2>
-            <Card>
-              <CardHeader>
-                <CardTitle>Business Listing</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {loadingBusinesses ? (
-                  <p className="text-muted-foreground">Loading businesses...</p>
-                ) : userBusinesses.length === 0 ? (
-                  <>
-                    <p className="text-lg font-medium">Not Active</p>
-                    <p className="text-muted-foreground mt-2">
-                      Upgrade to unlock premium features and boost your business visibility.
-                    </p>
-                    <Button className="mt-4">List Your Business($2/Year)</Button>
-                  </>
-                ) : (
-                  <div className="space-y-4">
-                    <p className="text-lg font-medium text-green-600">Active Listing(s)</p>
-                    <div className="space-y-3">
-                      {userBusinesses.map((business) => {
-                        const expirationDate = addDays(new Date(business.created_at), 365);
-                        return (
-                          <div key={business.id} className="border rounded-lg p-3 bg-muted/50">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h4 className="font-medium text-foreground">{business.name}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                  Expires: {format(expirationDate, 'MMM dd, yyyy')}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>POS + Website</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {loadingBusinesses ? (
-                  <p className="text-muted-foreground">Loading businesses...</p>
-                ) : activePOSBusinesses.length === 0 ? (
-                  <>
-                    <p className="text-lg font-medium">Not Active</p>
-                    <p className="text-muted-foreground mt-2">
-                      Get a complete business solution with Point of Sale system and professional website.
-                    </p>
-                    <Button className="mt-4">Get Started</Button>
-                  </>
-                ) : (
-                  <div className="space-y-4">
-                    <p className="text-lg font-medium text-green-600">Active POS + Website</p>
-                    <div className="space-y-3">
-                      {activePOSBusinesses.map((business) => {
-                        const odooExpiredDate = business.odoo_expired_date 
-                          ? new Date(business.odoo_expired_date)
-                          : addDays(new Date(business.created_at), 7);
-                        return (
-                          <div key={business.id} className="border rounded-lg p-3 bg-muted/50">
-                            <div className="flex justify-between items-start">
-                              <div>
-                                <h4 className="font-medium text-foreground">{business.name}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                  Odoo software expired date: {format(odooExpiredDate, 'MMM dd, yyyy')}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        );
 
       default:
         return (
