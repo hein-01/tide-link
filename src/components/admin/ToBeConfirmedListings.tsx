@@ -52,6 +52,7 @@ export default function ToBeConfirmedListings() {
           odoo_expired_date,
           "POS+Website"
         `)
+        .eq('payment_status', 'to_be_confirmed')
         .not('receipt_url', 'is', null)
         .order('created_at', { ascending: false });
 
