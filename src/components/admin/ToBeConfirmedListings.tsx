@@ -74,35 +74,27 @@ export default function ToBeConfirmedListings() {
       // Get business details first to calculate dates
       const { data: business, error: fetchError } = await supabase
         .from('businesses')
-        .select('last_payment_date, "POS+Website"')
+        .select('"POS+Website"')
         .eq('id', businessId)
         .single();
 
       if (fetchError) throw fetchError;
 
-      if (!business?.last_payment_date) {
-        toast({
-          title: "Error",
-          description: "No payment date found for this business",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      // Calculate new dates
-      const paymentDate = new Date(business.last_payment_date);
-      const newListingExpiredDate = new Date(paymentDate);
+      // Set current date as payment confirmation date
+      const currentDate = new Date();
+      const newListingExpiredDate = new Date(currentDate);
       newListingExpiredDate.setDate(newListingExpiredDate.getDate() + 365);
 
       let updateData: any = {
         payment_status: 'confirmed',
         receipt_url: null,
+        last_payment_date: currentDate.toISOString(),
         listing_expired_date: newListingExpiredDate.toISOString().split('T')[0]
       };
 
       // If POS+Website is 1, also update odoo_expired_date
       if (business["POS+Website"] === 1) {
-        const newOdooExpiredDate = new Date(paymentDate);
+        const newOdooExpiredDate = new Date(currentDate);
         newOdooExpiredDate.setDate(newOdooExpiredDate.getDate() + 30);
         updateData.odoo_expired_date = newOdooExpiredDate.toISOString();
       }
