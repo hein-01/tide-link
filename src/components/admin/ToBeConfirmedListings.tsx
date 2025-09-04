@@ -72,6 +72,8 @@ export default function ToBeConfirmedListings() {
 
   const confirmPayment = async (businessId: string) => {
     try {
+      console.log('Starting payment confirmation for business:', businessId);
+      
       // Get business details first to calculate dates
       const { data: business, error: fetchError } = await supabase
         .from('businesses')
@@ -100,20 +102,29 @@ export default function ToBeConfirmedListings() {
         updateData.odoo_expired_date = newOdooExpiredDate.toISOString();
       }
 
-      const { error } = await supabase
+      console.log('Updating business with data:', updateData);
+
+      const { data: updateResult, error } = await supabase
         .from('businesses')
         .update(updateData)
-        .eq('id', businessId);
+        .eq('id', businessId)
+        .select('payment_status');
 
       if (error) throw error;
+
+      console.log('Update successful, new payment status:', updateResult);
+
+      // Remove the listing from local state immediately
+      setListings(prev => prev.filter(listing => listing.id !== businessId));
 
       toast({
         title: "Success",
         description: "Payment confirmed successfully",
       });
 
-      // Refresh the listings
-      fetchPendingListings();
+      console.log('Refreshing listings...');
+      // Refresh the listings to ensure consistency
+      await fetchPendingListings();
     } catch (error) {
       console.error('Error confirming payment:', error);
       toast({
