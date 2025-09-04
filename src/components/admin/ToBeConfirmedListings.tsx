@@ -37,6 +37,7 @@ export default function ToBeConfirmedListings() {
 
   const fetchPendingListings = async () => {
     try {
+      console.log('Fetching pending listings...');
       const { data, error } = await supabase
         .from('businesses')
         .select(`
@@ -56,7 +57,22 @@ export default function ToBeConfirmedListings() {
         .not('receipt_url', 'is', null)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching listings:', error);
+        throw error;
+      }
+      
+      console.log('Raw database result:', data);
+      console.log('Number of listings found:', data?.length || 0);
+      
+      // Additional debug - let's also check what payment statuses exist
+      const { data: allBusinesses } = await supabase
+        .from('businesses')
+        .select('id, name, payment_status')
+        .not('receipt_url', 'is', null);
+      
+      console.log('All businesses with receipts:', allBusinesses);
+      
       setListings(data || []);
     } catch (error) {
       console.error('Error fetching pending listings:', error);
